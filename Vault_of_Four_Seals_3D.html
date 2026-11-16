@@ -271,6 +271,9 @@ svg.diagram{width:100%;max-width:340px;display:block;margin:6px auto 12px;backgr
 (() => {
 'use strict';
 const $ = s => document.querySelector(s);
+const fail = msg => { const l = $('#loading'); if (l) l.innerHTML = `<div style="text-align:center;max-width:460px;padding:20px;line-height:1.6;font-family:Inter,sans-serif;letter-spacing:0"><div style="font-family:Cinzel,serif;font-size:22px;margin-bottom:10px">The vault won't open</div>${msg}<br><br><button onclick="location.reload()" style="padding:10px 20px;border-radius:10px;border:0;background:#ffb347;font-weight:700">Try again</button></div>`; };
+if (!window.THREE) { fail('The 3D engine could not load. Check your internet connection, or try Chrome or Safari.'); return; }
+try { const t = document.createElement('canvas'); if (!(t.getContext('webgl2') || t.getContext('webgl'))) throw 0; } catch (e) { fail('This browser or device does not support 3D graphics (WebGL). Try Chrome or Safari on a laptop or tablet.'); return; }
 const rnd = (a, b) => a + Math.random() * (b - a);
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
